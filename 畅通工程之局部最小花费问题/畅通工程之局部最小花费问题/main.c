@@ -9,39 +9,44 @@
 #include <stdio.h>
 #include <stdlib.h>
 #define MAX 10000
+#define MAX_VALUE 1e+8
 //定义Prim算法求解最小生成树
-void Prim(int gm[MAX][MAX],int tree[MAX],int cost[MAX],int gmSize){
-    int *flag = (int *)malloc(sizeof(int) * gmSize);
+int Prim(int **cities,int **untouch,int size){
+    int sumMincost = 0;
+    int *cost = (int *)malloc(sizeof(int) * size);
+    int *flag = (int *)malloc(sizeof(int) * size);
     int mincost,k = 0;
-    for(int i = 0;i<gmSize;i++){
-        cost[i] = gm[0][i];
-        tree[i] = 0;
+    //将第一个作为开始节点
+    for(int i = 0;i<size;i++){
+        cost[i] = cities[0][i];
+//        tree[i] = 0;
         flag[i] = 0;
     }
     flag[0] = 1;
     
-    for(int i = 1;i<gmSize;i++){
-        mincost = 100000;          //将mincost赋值一个很大的值
-        for(int j = 1;j<gmSize;j++){
+    for(int i = 1;i<size;i++){
+        mincost = MAX_VALUE;          //将mincost赋值一个很大的值
+        for(int j = 1;j<size;j++){
             if(flag[j] == 0 && cost[j] < mincost){
                 mincost = cost[j];
                 k = j;
             }
         }
+        //找出最小花费的路线
         flag[k] = 1;
         
-        for(int j = 1;j<gmSize;j++){
-            if(flag[j] == 0 && gm[k][j] < cost[j]){
-                cost[j] = gm[k][j];
-                tree[j] = k;
+        for(int j = 1;j<size;j++){
+            if(flag[j] == 0 && cities[k][j] < cost[j]){
+                cost[j] = cities[k][j];
+//                tree[j] = k;
             }
         }
     }
-    
+    return 0;
 }
 
 int main(int argc, const char * argv[]) {
-    int m = 0,countUntch = 0;
+    int m = 0;
     //定义城市间使用图的邻接矩阵存储以及未联通城市的存储
     int **cities , **untch;
     scanf("%d",&m);
@@ -60,19 +65,21 @@ int main(int argc, const char * argv[]) {
         }
     }
     
-    for(int i = 0;i<m;i++){
-        for(int j = 0;j<m;j++){
-            printf("%d,%d\n",cities[i][j],untch[i][j]);
-        }
-    }
+//    for(int i = 0;i<m;i++){
+//        for(int j = 0;j<m;j++){
+//            printf("%d,%d\n",cities[i][j],untch[i][j]);
+//        }
+//    }
     //输入数据总数
     int arrCount = m * (m-1) * 2;
     int temp[4];
     for(int i = 0;i < arrCount;i+=4){
-        for(int j = i;j < j+4;j++){
-            scanf("%d ",&temp[j-i]);
+        for(int j = i;j < i+4;j++){
+            scanf("%d",&temp[j-i]);
+//            printf("%d ",temp[j-i]);
         }
-        int a = temp[0],b = temp[1];
+//        printf("\n");
+        int a = temp[0]-1,b = temp[1]-1;
         //将结果赋值给邻接矩阵
         cities[a][b] = cities[b][a] = temp[2];
         //记录未联通的点(若联通赋值为1)
@@ -81,12 +88,12 @@ int main(int argc, const char * argv[]) {
         }
     }
     
-    for(int i = 0;i<m;i++){
-        for(int j = 0;j<m;j++){
-            printf("city%d-city%d : cost = %d :isTouch = %d\n", i+1,j+1,cities[i][j],untch[i][j]);
-        }
-    }
-    
+//    for(int i = 0;i<m;i++){
+//        for(int j = 0;j<m;j++){
+//            printf("city%d-city%d : cost = %d :isTouch = %d\n", i+1,j+1,cities[i][j],untch[i][j]);
+//        }
+//    }
+
     
     
     
