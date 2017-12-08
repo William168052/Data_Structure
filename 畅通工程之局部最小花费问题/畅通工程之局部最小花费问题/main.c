@@ -16,13 +16,38 @@ int Prim(int **cities,int **untouch,int size){
     int *cost = (int *)malloc(sizeof(int) * size);
     int *flag = (int *)malloc(sizeof(int) * size);
     int mincost,k = 0;
+    
     //将第一个作为开始节点
     for(int i = 0;i<size;i++){
-        cost[i] = cities[0][i];
+        int isTouch = 1;
+        static int firstEle = 0;
+        //记录初始联通的节点个数
+        int touchCount = 0;
 //        tree[i] = 0;
-        flag[i] = 0;
+        
+        
+        for(int j = 0;j<size;j++){
+            if(untouch[i][j] == 1){
+                isTouch = 1;
+                break;
+            }else{
+                isTouch = 0;
+            }
+        }
+        //拿到已经联通的元素中的第一个元素
+        if(isTouch == 1){
+            touchCount++;
+            if(touchCount == 1){
+                firstEle = i;
+            }
+        }
+        flag[i] = isTouch;
+        cost[i] = cities[firstEle][i];
     }
-    flag[0] = 1;
+//    if (countTime == 0) {
+//        flag[0] = 1;
+//    }
+    
     
     for(int i = 1;i<size;i++){
         mincost = MAX_VALUE;          //将mincost赋值一个很大的值
@@ -42,7 +67,10 @@ int Prim(int **cities,int **untouch,int size){
             }
         }
     }
-    return 0;
+    for(int i = 0;i<size;i++){
+        sumMincost += cost[i];
+    }
+    return sumMincost;
 }
 
 int main(int argc, const char * argv[]) {
@@ -93,10 +121,18 @@ int main(int argc, const char * argv[]) {
 //            printf("city%d-city%d : cost = %d :isTouch = %d\n", i+1,j+1,cities[i][j],untch[i][j]);
 //        }
 //    }
+    
+    printf("%d",Prim(cities, untch, m));
 
     
     
-    
+//    4
+//    1 2 1 0
+//    1 3 4 0
+//    1 4 1 0
+//    2 3 3 0
+//    2 4 2 0
+//    3 4 5 0
     
     return 0;
 }
