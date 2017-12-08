@@ -41,12 +41,50 @@ void Prim(int gm[MAX][MAX],int tree[MAX],int cost[MAX],int gmSize){
 }
 
 int main(int argc, const char * argv[]) {
-    int m,n;
-    scanf("%d %d",&m,&n);
-    //定义图的邻接矩阵存储
-    int **cities = (int **)malloc(sizeof(int *) * n);
-    for(int i = 0;i<n;i++){
+    int m = 0,countUntch = 0;
+    //定义城市间使用图的邻接矩阵存储以及未联通城市的存储
+    int **cities , **untch;
+    scanf("%d",&m);
+    //邻接矩阵存储
+    untch = (int **)malloc(sizeof(int *) * m);
+    //邻接矩阵存储
+    cities = (int **)malloc(sizeof(int *) * m);
+    for(int i = 0;i<m;i++){
         cities[i] = (int *)malloc(sizeof(int) * m);
+        untch[i] = (int *)malloc(sizeof(int) * m);
+    }
+    for(int i = 0;i<m;i++){
+        for(int j = 0;j<m;j++){
+            cities[i][j] = 0;
+            untch[i][j] = 0;
+        }
+    }
+    
+    for(int i = 0;i<m;i++){
+        for(int j = 0;j<m;j++){
+            printf("%d,%d\n",cities[i][j],untch[i][j]);
+        }
+    }
+    //输入数据总数
+    int arrCount = m * (m-1) * 2;
+    int temp[4];
+    for(int i = 0;i < arrCount;i+=4){
+        for(int j = i;j < j+4;j++){
+            scanf("%d ",&temp[j-i]);
+        }
+        int a = temp[0],b = temp[1];
+        //将结果赋值给邻接矩阵
+        cities[a][b] = cities[b][a] = temp[2];
+        //记录未联通的点(若联通赋值为1)
+        if(temp[3] != 0){
+            untch[a][b] = untch[b][a] = 1;
+        }
+    }
+    
+    for(int i = 0;i<m;i++){
+        for(int j = 0;j<m;j++){
+            printf("city%d-city%d : cost = %d :isTouch = %d\n", i+1,j+1,cities[i][j],untch[i][j]);
+        }
     }
     
     
