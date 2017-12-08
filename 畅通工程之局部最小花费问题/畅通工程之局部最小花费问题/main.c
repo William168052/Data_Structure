@@ -42,11 +42,10 @@ int Prim(int **cities,int **untouch,int size){
             }
         }
         flag[i] = isTouch;
+        printf("flag[%d] = %d\n",i,flag[i]);
         cost[i] = cities[firstEle][i];
     }
-//    if (countTime == 0) {
-//        flag[0] = 1;
-//    }
+
     
     
     for(int i = 1;i<size;i++){
@@ -125,14 +124,15 @@ int main(int argc, const char * argv[]) {
     printf("%d",Prim(cities, untch, m));
 
     
-    
-//    4
-//    1 2 1 0
-//    1 3 4 0
-//    1 4 1 0
-//    2 3 3 0
-//    2 4 2 0
-//    3 4 5 0
+/*
+4
+1 2 1 0
+1 3 4 0
+1 4 1 0
+2 3 3 0
+2 4 2 0
+3 4 5 0
+ */
     
     return 0;
 }
