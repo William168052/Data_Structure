@@ -8,42 +8,54 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#define MAX 10000
+typedef struct graph{
+    int *vexs;
+    int **edges;
+}MGragh;
+void ShortPath_Dijkstra(MGragh *G){
+
+}
 
 int main(int argc, const char * argv[]) {
     int eleNum,borderNum,calculateNum;   //定义节点个数和边的个数
     scanf("%d %d",&eleNum,&borderNum);
+    MGragh *G = (MGragh *)malloc(sizeof(MGragh));
+    G->vexs = (int *)malloc(sizeof(int) * eleNum);
+    G->edges = (int **)malloc(sizeof(int *) * eleNum);
     //定义图的邻接矩阵存储方式并初始化为零
-    int **node = (int **)malloc(sizeof(int *) * eleNum);
+//    int **mGragh = (int **)malloc(sizeof(int *) * eleNum);
     for(int i = 0;i<eleNum;i++){
+        G->vexs[i] = i+i;
         int *n = (int *)malloc(sizeof(int) * eleNum);
         for (int j = 0; j<eleNum; j++) {
             n[j] = 0;
         }
-        node[i] = n;
+        G->edges[i] = n;
     }
     
     for(int i = 0;i<borderNum;i++){
         int a,b;
         scanf("%d %d",&a,&b);
-        node[a-1][b-1] = 1;
+        G->edges[a-1][b-1] = 1;
     }
     
-    for(int i = 0;i<eleNum;i++){
-        for(int j = 0;j<eleNum;j++){
-            if(node[i][j] == 1)
-            printf("%d--%d\n",i+1,j+1);
-        }
-
-    }
+//    for(int i = 0;i<eleNum;i++){
+//        for(int j = 0;j<eleNum;j++){
+//            if(G->edges[i][j] == 1)
+//            printf("%d--%d\n",i+1,j+1);
+//        }
+//
+//    }
     scanf("%d",&calculateNum);
     int *calculateNode = (int *)malloc(sizeof(int) * calculateNum);
     for(int i = 0;i<calculateNum;i++){
         scanf("%d",&calculateNode[i]);
     }
     
-    for(int i = 0;i<calculateNum;i++){
-        printf("%d ",calculateNode[i]);
-    }
+//    for(int i = 0;i<calculateNum;i++){
+//        printf("%d ",calculateNode[i]);
+//    }
 }
 
 
