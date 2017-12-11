@@ -13,8 +13,10 @@ typedef struct graph{
     int *vexs;
     int **edges;
 }MGragh;
-void ShortPath_Dijkstra(MGragh *G){
 
+//运用Dijkstra算法求最短路径
+void ShortPath_Dijkstra(MGragh *G,int vexIndex){
+    
 }
 
 int main(int argc, const char * argv[]) {
