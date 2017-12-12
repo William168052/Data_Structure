@@ -88,6 +88,7 @@ DataType Pop(Queue *Q){
 void addFriend(DataType index,Person *p){
     Friend *f = (Friend *)malloc(sizeof(Friend));
     f->index = index;
+    f->next = NULL;
     if(p->friends != NULL){
         Friend *temp;
         temp = p->friends;
@@ -125,27 +126,25 @@ int MaxCircle(FriendCircle *FC){
     Push(Q, FC->p[i].index);
     
     //如果队列不空且数组没有完全遍历就执行循环
-    while(!(Q->front == Q->rear && i<FC->pNum)){
+    while(!(Q->front == Q->rear && i>FC->pNum)){
         
         //队列不空出队
         while(Q->front != Q->rear){
             DataType index = Pop(Q);
-            //如果没被访问过就访问
-            if(FC->p[index].isVisited != 1){
-                Person p = FC->p[index];
-                p.isVisited = 1;
-                Friend *f = p.friends;
+                Person *p = &FC->p[index];
+                p->isVisited = 1;
+                Friend *f = p->friends;
                 //访问它的friends
-                while (f) {
+                while (f != NULL) {
                     //没被访问过的入队
                     if(FC->p[f->index].isVisited != 1){
                         //入队
                         Push(Q, f->index);
+                        FC->p[f->index].isVisited = 1;
                         count++;
                     }
                     f = f->next;
                 }
-            }
         }
         
         
@@ -158,9 +157,9 @@ int MaxCircle(FriendCircle *FC){
                 countMax = count;
             }
             count = 0;
-            Person p = FC->p[i];
-            p.isVisited = 1;
-            Friend *f = p.friends;
+            Person *p = &FC->p[i];
+            p->isVisited = 1;
+            Friend *f = p->friends;
             //访问它的friends
             while (f) {
                 //没被访问过的入队
@@ -198,13 +197,19 @@ int main(int argc, const char * argv[]) {
         int num;
         scanf("%d",&num);
 //        printf("%d",c->eleNum);
+        DataType *index = (DataType *)malloc(sizeof(DataType) * num);
         for(int k = 0;k<num;k++){
-            int pIndex;
-            Friend *temp;
-            Friend *f = (Friend *)malloc(sizeof(Friend));
-            scanf("%d",&pIndex);
-            //插入操作
-            
+            scanf("%d",&index[k]);
+//            printf("%d",index[k]);
+        }
+        
+        for(int i = 0;i<num;i++){
+            for(int k = 0;k<num;k++){
+                if(index[k]!=index[i]){
+//                    printf("%d----->%d\n",index[i],index[k]);
+                    addFriend(index[i], &p[index[k]]);
+                }
+            }
         }
     }
 
