@@ -9,28 +9,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #define DataType int
-/*
-
-typedef struct club{
-    int eleNum;
-    struct club *next;
-}Club;
-
-Club *initClub(int eleNum){
-    Club *c = (Club *)malloc(sizeof(Club));
-    c->eleNum = eleNum;
-    c->next = NULL;
-    return c;
-}
-
-
-typedef struct person{
-    DataType data;
-    Club *clubs;
-}Person;
-
-*/
-
 typedef struct friend{
     DataType index;
     struct friend *next;
@@ -98,26 +76,6 @@ void addFriend(DataType index,Person *p){
 }
 
 int MaxCircle(FriendCircle *FC){
-   /*
-    
-    //定义一个计数变量
-    int countMax = 0;
-    int count = 0;
-    for (int i = 1; i < FC -> pNum; i++) {
-        count = 0;
-        Person p = FC->p[i];
-        Club *c = p.clubs;
-        while(c){
-            count += c -> eleNum-1;
-            c = c -> next;
-        }
-        //加上自己
-        count++;
-        countMax = count > countMax ? count : countMax;
-    }
-    return countMax;
-    */
-
     Queue *Q = initQueue(FC->pNum);
     int count = 1;
     int countMax = 0;
@@ -196,7 +154,6 @@ int main(int argc, const char * argv[]) {
     for(int j = 0;j<m;j++){
         int num;
         scanf("%d",&num);
-//        printf("%d",c->eleNum);
         DataType *index = (DataType *)malloc(sizeof(DataType) * num);
         for(int k = 0;k<num;k++){
             scanf("%d",&index[k]);
