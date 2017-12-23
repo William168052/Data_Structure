@@ -13,22 +13,44 @@
 #define MAX_N 1e+5
 
 typedef struct topic{
-    char **topic;
+    char *topic;
     int countTimes;
     
     
 }Topic;
 
 Topic *initTopics(){
-    Topic *t = (Topic *)malloc(sizeof(Topic *) * MAX_N);
-    
+    Topic *t = (Topic *)malloc(sizeof(Topic) * MAX_N);
     //计算话题被重复的次数
-    t->countTimes = 0;
     for(int i = 0;i<MAX_N;i++){
-        
+        t[i].countTimes = 0;
     }
     return t;
 }
+
+char *removeSymbol(char *c){
+    char *cNew = (char *)malloc(sizeof(char) * TOPIC_MAX);
+    int cIndex = 0;
+    for(int i = 0;c[i] != '\0';i++){
+        if(((c[i]>='A' && c[i]<='Z') || (c[i]>='a' && c[i]<='z')) || (c[i]>= '0' && c[i]<= '9')){
+            cNew[cIndex++] = c[i];
+        }
+    }
+    return cNew;
+}
+
+//_Bool isEqual(char *c1,char *c2){
+//    int fail = 0;
+    //先对两个字符串进行处理
+    
+//    for(int i = 0;c1[i] != '\0';){
+//        if(c1[i] == c2[i]||
+//           c1[i] + 32 == c2[i]||
+//           c1[i] - 32 == c2[i]){
+//            i++;
+//        }
+//    }
+//}
 
 void topTopic(char **strArr,int strNum){
     Topic *topics = initTopics();
@@ -51,11 +73,11 @@ void topTopic(char **strArr,int strNum){
                 topic[topicLength] = '\0';
                 //在话题数组中寻找是否有此话题，有的话直接加一，若没有就放进去
                 if(topicsNum == 0){
-                    topics->topic[topicsNum++] = topic;
-                    
+                    topics[topicsNum++].topic = topic;
                 }else{
                     for(int index = 0;index<topicsNum;index++){
                         //字符串匹配
+//                        if(topics[index].topic)
                     }
                 }
                 
@@ -101,10 +123,12 @@ int main(int argc, const char * argv[]) {
 //    strArr[1] = "asdsad";
 //    strArr[2] = "awww";
 //    strArr[3] = "asdfgdfgsad";
-    
+
     topTopic(strArr, num);
 //    for(int i = 0;i<num;i++){
 //        printf("%s\n",strArr[i]);
 //    }
+    
+
     return 0;
 }
