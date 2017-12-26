@@ -76,7 +76,7 @@ _Bool isEqual(char *c1,char *c2){
 void topTopic(char **strArr,int strNum){
     //定义存储所有话题的链表
     Topic *topics = initTopics();
-    //计算话题数
+    //计算热门话题数
     int topicsNum = 0;
     
     for(int i = 0;i<strNum;i++){
@@ -103,7 +103,7 @@ void topTopic(char **strArr,int strNum){
                     topics->address = i;
                     topics->blogPiece++;
 //                    topics->countTimes++;
-                    topicsNum++;
+//                    topicsNum++;
                 }else{
                     _Bool isFind = 0;
                     Topic *p = topics;
@@ -124,7 +124,7 @@ void topTopic(char **strArr,int strNum){
                     if (isFind == 0) {
 //                        topics[topicsNum].topic = topicStr;
 //                        topics[topicsNum].countTimes++;
-                        topicsNum++;
+//                        topicsNum++;
                         //插入链表
                         Topic *t = initTopics();
 //                        t->countTimes++;
@@ -157,30 +157,40 @@ void topTopic(char **strArr,int strNum){
     Topic *p = topics;
     int max = 0;
     char front_letter = '\0';
+    Topic *PrintTopic = NULL;
     while(p!=NULL){
 //        printf("%s-----%d\n",p->topic,topicsNum);
         if(p->blogPiece > max){
             front_letter = p->topic[0];
             max = p->blogPiece;
-            if(p->next == NULL){
-                printf("%s\n%d\n",p->topic,p->blogPiece);
-                topicsNum--;
-                break;
-            }
+            PrintTopic = p;
+//            if(p->next == NULL){
+//                printf("%s\n%d\n",p->topic,p->blogPiece);
+//                topicsNum--;
+//                break;
+//            }
         }else if(p->blogPiece == max){
             if(p->topic[0]<front_letter){
                 front_letter = p->topic[0];
-                if(p->next == NULL){
-                    printf("%s\n%d\n",p->topic,p->blogPiece);
-                    topicsNum--;
-                    break;
-                }
+                PrintTopic = p;
+//                if(p->next == NULL){
+//                    printf("%s\n%d\n",p->topic,p->blogPiece);
+//                    topicsNum--;
+//                    break;
+//                }
+                topicsNum++;
             }
 
         }
         p = p->next;
     }
-    printf("And %d more ...",topicsNum);
+    if(PrintTopic!=NULL){
+        printf("%s\n%d\n",PrintTopic->topic,PrintTopic->blogPiece);
+//        topicsNum--;
+    }
+    if(topicsNum>0){
+        printf("And %d more ...",topicsNum);
+    }
 }
 
 int main(int argc, const char * argv[]) {
