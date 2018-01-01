@@ -9,7 +9,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #define DataType int
-#define MAX 10000
 //定义邻接点的数据类型
 typedef struct node{
     int adjvex;
@@ -26,17 +25,44 @@ typedef struct graph{
     VertexNode *graph;
     int nodeNum;
 }*Graph;
+
 //构造逆邻接表
 Graph getInverse(Graph G){
-    Graph InvG = NULL;
+    //创建一个空的逆邻接表并初始化
+    Graph InvG = (Graph)malloc(sizeof(Graph));
     InvG->graph = (VertexNode *)malloc(sizeof(VertexNode) * G->nodeNum);
     InvG->nodeNum = G->nodeNum;
-    
+    for(int i = 0;i<G->nodeNum;i++){
+        InvG->graph[i].data = G->graph[i].data;
+        InvG->graph[i].firstEdge = NULL;
+    }
+    //遍历邻接表
+    for(int i = 0;i<G->nodeNum;i++){
+        if(G->graph[i].firstEdge != NULL){
+            //创建一个指针指向第一个邻接节点
+            EdgeNode *n = G->graph[i].firstEdge;
+            //创建一个新的邻接节点
+            EdgeNode *edge = (EdgeNode *)malloc(sizeof(EdgeNode));
+            edge->adjvex = i;
+            edge->next = NULL;
+            while (n!=NULL) {
+                if(InvG->graph[n->adjvex].firstEdge == NULL){
+                    InvG->graph[n->adjvex].firstEdge = edge;
+                }else{
+                    EdgeNode *temp = InvG->graph[n->adjvex].firstEdge;
+                    InvG->graph[n->adjvex].firstEdge = edge;
+                    temp = edge->next;
+                }
+                n = n->next;
+            }
+        }
+        
+    }
+    return InvG;
 }
 
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    printf("Hello, World!\n");
+    
     return 0;
 }
