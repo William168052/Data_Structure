@@ -1,10 +1,10 @@
-//
+﻿//
 //  main.c
 //  朋友圈
 //
 //  Created by William on 2017/12/11.
 //  Copyright © 2017年 William. All rights reserved.
-//
+//asdasdasd
 
 #include <stdio.h>
 #include <stdlib.h>
